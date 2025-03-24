@@ -1,59 +1,42 @@
-# Target Location Converter
+# 目標物位置轉換工具
 
-As issue #1 mentioned, this small utility is developed to solve the following statement:
+以下是本儲存庫所欲解決的問題：
+> 已知機器人偵測到以相機位置為原點的目標物相對座標，另外已有機器人的絕對座標與絕對指向（以四元數表示）。以上述條件換算出目標物的絕對座標。
 
-> Given the current capability to obtain the relative distance between the camera and the target, the system shall compute the target’s global position by transforming the relative pose using the robot’s known position and orientation (expressed as a quaternion).
+## 基本概念
 
-## Basic Concept
+### 以四元數進行座標旋轉
 
-Using homogeneous coordinates, we notated the robot's known position as $`
-X= \begin{pmatrix}
-a \\
-b \\
-c \\
+三維空間中，已知一四元數 $`q=w+xi+yj+zk`$ 對應機器人之指向。對應此四元數對應的 $`3 \times 3`$ 旋轉矩陣為
+```math
+R_q =
+\begin{pmatrix}
+1-2y^2-2z^2  &  2xy-2wz      &  2wz+2wy  \\
+2xy+2wz      &  1-2x^2-2z^2  &  2yz-2wz  \\
+2xz-2wy      &  2yz+2wz      &  1-2x^2-2y^2
+\end{pmatrix}
+```
+
+### 齊次坐標
+
+我們可以把已知的某目標物相對位置向量（以相機為原點） $`\vec{p_r}=(p_x,p_y,p_z)`$ 表示為齊次坐標 $`(p,1)`$，以矩陣表示為
+```math
+P_r =
+\begin{pmatrix}
+p_x \\
+p_y \\
+p_z \\
 1
 \end{pmatrix}
-`$
-and the orientation as $`
-H= \begin{pmatrix}
-x \\
-y \\
-z \\
-w
-\end{pmatrix}
-`$. 
-
-### Rotation of known translation vector / matrix
-Also assume that $`T_l(v_x,v_y,v_z)`$ is the local translation matrix from the camera (origin) to the target, which is<br/>
-```math
-T_l(v_x,v_y,v_z)= \begin{pmatrix} 1 & 0 & 0 & v_x \\0 & 1 & 0 & v_y \\0 & 0 & 1 & v_z \\0 & 0 & 0 & 1 \end{pmatrix}
 ```
-, notated the corresponding local translation vector $\vec{t_l} = (v_x,v_y,v_z)$ as a pure quaternion, where </br>
+
+### 齊次變換矩陣
+已知相對坐標系原點在絕對坐標系的位置為 $`t=(t_x,t_y,t_z)`$，將其與前面四元數所得出的旋轉矩陣 $R_q$ 結合，可得完整的 $`4 \times 4`$ 齊次變換矩陣
 ```math
-t_l=
+T =
 \begin{pmatrix}
-v_x \\
-v_y \\
-v_z \\
-0
+   &  R_q  &     &  t  \\
+0  &  0    &  0  &  1
 \end{pmatrix}
 ```
-
-**Lemma 1**: A vector $\vec{p}$ can be rotated by a quaternion $q$. The result will be
-```math
-p'= q \cdot p \cdot q^*
-```
-, where $p$ is the corresponding quaternion of $\vec{p}$.
-
-As Lemma 1 mentioned, we can rotate the translation quaternion $t_l$ to $t_r$ like <br/>
-```math
-t_r=H \cdot t_l \cdot H^* 
-```
-
-### Adding the local origin position
-
-By $X$ and the rotated matrix $T_r$ (corresponding the quaternion $t_r$,) we can know the global translation matrix<br/>
-```math
-T_g = X + T_r
-```
-, which corresponds the global position of the target.
+，此矩陣已同時包含了旋轉與平移之操作。可直接以 $`T \cdot P_r`$ 求得具備目標物絕對坐標的齊次坐標 $`(p_g, 1)`$。
