@@ -24,7 +24,7 @@ w
 `$. 
 
 ### Rotation of known translation vector / matrix
-Also assume that $`T_l(v_x,v_y,v_z)`$ is the local translation matrix from the camera (origin) to the target, which is 
+Also assume that $`T_l(v_x,v_y,v_z)`$ is the local translation matrix from the camera (origin) to the target, which is\ 
 $$T_l(v_x,v_y,v_z)= \begin{pmatrix} 1 & 0 & 0 & v_x \\0 & 1 & 0 & v_y \\0 & 0 & 1 & v_z \\0 & 0 & 0 & 1 \end{pmatrix}$$
 , notated the corresponding local translation vector $\vec{t_l} = (v_x,v_y,v_z)$ as a pure quaternion, where
 $$
