@@ -26,9 +26,10 @@ w
 ### Rotation of known translation vector / matrix
 Also assume that $`T_l(v_x,v_y,v_z)`$ is the local translation matrix from the camera (origin) to the target, which is<br/>
 ```math
-T_l(v_x,v_y,v_z)= \begin{pmatrix} 1 & 0 & 0 & v_x \\0 & 1 & 0 & v_y \\0 & 0 & 1 & v_z \\0 & 0 & 0 & 1 \end{pmatrix}$$<br/>
+T_l(v_x,v_y,v_z)= \begin{pmatrix} 1 & 0 & 0 & v_x \\0 & 1 & 0 & v_y \\0 & 0 & 1 & v_z \\0 & 0 & 0 & 1 \end{pmatrix}
 ```
-, notated the corresponding local translation vector $\vec{t_l} = (v_x,v_y,v_z)$ as a pure quaternion, where
+, notated the corresponding local translation vector $\vec{t_l} = (v_x,v_y,v_z)$ as a pure quaternion, where </br>
+```math
 t_l=
 \begin{pmatrix}
 v_x \\
@@ -36,23 +37,23 @@ v_y \\
 v_z \\
 0
 \end{pmatrix}
-$$
+```
 
 **Lemma 1**: A vector $\vec{p}$ can be rotated by a quaternion $q$. The result will be
-$$
+```math
 p'= q \cdot p \cdot q^*
-$$
+```
 , where $p$ is the coresponding quaternion of $\vec{p}$.
 
-As Lemma 1 mentioned, we can rotate the translation quaternion $t_l$ to $t_r$ like
-$$
+As Lemma 1 mentioned, we can rotate the translation quaternion $t_l$ to $t_r$ like <br/>
+```math
 t_r=H \cdot t_l \cdot H^* 
-$$
+```
 
 ### Adding the local origin position
 
-By $X$ and the rotated matrix $T_r$ (corresponding the quaternion $t_r$,) we can know the global translation matrix
-$$
+By $X$ and the rotated matrix $T_r$ (corresponding the quaternion $t_r$,) we can know the global translation matrix<br/>
+```math
 T_g = X + T_r
-$$
+```
 , which corresponds the global position of the target.
