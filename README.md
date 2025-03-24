@@ -43,7 +43,7 @@ v_z \\
 ```math
 p'= q \cdot p \cdot q^*
 ```
-, where $p$ is the coresponding quaternion of $\vec{p}$.
+, where $p$ is the corresponding quaternion of $\vec{p}$.
 
 As Lemma 1 mentioned, we can rotate the translation quaternion $t_l$ to $t_r$ like <br/>
 ```math
