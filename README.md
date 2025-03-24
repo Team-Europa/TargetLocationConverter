@@ -6,14 +6,14 @@ As issue #1 mentioned, this small utility is developed to solve the following st
 
 ## Basic Concept
 
-Using homogeneous coordinates, we notated the robot's known position as $
+Using homogeneous coordinates, we notated the robot's known position as $`
 X= \begin{pmatrix}
 a \\
 b \\
 c \\
 1
 \end{pmatrix}
-$
+`$
 and the orientation as $
 H= \begin{pmatrix}
 x \\
