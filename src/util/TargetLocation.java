@@ -11,11 +11,14 @@ public class TargetLocation {
     }
 
     public static Position transformPosition(Position localTarget, Position localOrigin, Quaternion orientation) {
+        // Rotation matrix converting
         double[][] R = quaternionToRotationMatrix(orientation);
+        // Rotating and transforming
+        double[] localOriginMatrix = {localOrigin.getX(), localOrigin.getY(), localOrigin.getZ()};
         double[] localPositionMatrix = {localTarget.getX(), localTarget.getY(), localTarget.getZ()};
         double[] globalPosition = new double[3];
         for (int i = 0; i < 3; i++) {
-            globalPosition[i] = localOrigin.getX();
+            globalPosition[i] = localOriginMatrix[i];
             for (int j = 0; j < 3; j++) {
                 globalPosition[i] += R[i][j] * localPositionMatrix[j];
             }

@@ -2,12 +2,10 @@ import util.Position;
 import util.Quaternion;
 import util.TargetLocation;
 
-import java.lang.annotation.Target;
-
 public class Main {
     /*
      * This is a test environment for the TargetLocation.
-     * In this test, the expected output would be: "Global Position: (4, 2, 5)
+     * In this test, the expected output would be: "Global Position: (4, 2, 5)"
      */
     public static void main(String[] args) {
         Position localOrigin = new Position(3,2,5);
